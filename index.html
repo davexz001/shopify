@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURÉ — Premium Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1614;
+    --warm: #C8A97E;
+    --warm-light: #E8D9C0;
+    --muted: #8A7F74;
+    --white: #FDFBF7;
+    --accent: #2C1810;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    cursor: none;
+  }
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--ink);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transition: transform 0.15s ease;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transition: all 0.12s ease;
+    opacity: 0.5;
+  }
+
+  /* ANNOUNCEMENT BANNER */
+  .banner {
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+  .banner span { color: var(--warm); margin: 0 6px; }
+
+  /* HEADER */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid rgba(26,22,20,0.1);
+    padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+    transition: box-shadow 0.3s;
+  }
+  header.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--ink);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  nav { display: flex; gap: 36px; align-items: center; }
+  nav a {
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 400;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  nav a::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--warm);
+    transition: width 0.3s ease;
+  }
+  nav a:hover::after { width: 100%; }
+  .header-icons { display: flex; gap: 20px; align-items: center; }
+  .header-icons button {
+    background: none; border: none; cursor: none;
+    color: var(--ink); font-size: 18px;
+    position: relative;
+  }
+  .cart-count {
+    position: absolute; top: -6px; right: -8px;
+    background: var(--warm); color: var(--white);
+    font-size: 9px; width: 16px; height: 16px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+  }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 110px);
+    overflow: hidden;
+  }
+  .hero-left {
+    background: var(--ink);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 80px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left::before {
+    content: 'AURÉ';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 200px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.03);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 5vw, 76px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--warm); }
+  .hero-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.6);
+    max-width: 380px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-btns {
+    display: flex; gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .btn-primary {
+    background: var(--warm);
+    color: var(--ink);
+    padding: 14px 36px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: none; cursor: none;
+    transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--warm-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 13px 36px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 400;
+    border: 1px solid rgba(245,240,232,0.3);
+    cursor: none;
+    transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--warm); color: var(--warm); transform: translateY(-2px); }
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: #2C2017;
+  }
+  .hero-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative;
+  }
+  .hero-model-shape {
+    width: 260px; height: 420px;
+    background: linear-gradient(160deg, #4a3728 0%, #8B6F47 50%, #C8A97E 100%);
+    border-radius: 130px 130px 40px 40px;
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+  }
+  .hero-model-shape::before {
+    content: '';
+    position: absolute; top: 16px; left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 80px;
+    background: #D4A97A;
+    border-radius: 50%;
+  }
+  .hero-model-shape::after {
+    content: 'SS 2025';
+    position: absolute; bottom: -40px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: rgba(245,240,232,0.4);
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+  }
+  .hero-badge {
+    position: absolute; top: 40px; right: 40px;
+    width: 80px; height: 80px;
+    border: 1px solid rgba(200,169,126,0.4);
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    animation: rotateBadge 12s linear infinite;
+  }
+  .hero-badge span {
+    font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm); text-align: center;
+    line-height: 1.4;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; color: rgba(245,240,232,0.4);
+    font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: rgba(200,169,126,0.5);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    background: var(--ink);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex; gap: 0;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-item {
+    display: inline-flex; align-items: center; gap: 32px;
+    padding: 0 32px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+  }
+  .marquee-item span { color: var(--warm); font-size: 16px; }
+
+  /* CATEGORIES */
+  .section { padding: 100px 48px; }
+  .section-header { text-align: center; margin-bottom: 60px; }
+  .section-tag {
+    font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--warm);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+  .section-title em { font-style: italic; }
+  .categories-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 360px 240px;
+    gap: 12px;
+  }
+  .cat-card {
+    position: relative; overflow: hidden; cursor: none;
+    background: var(--ink);
+  }
+  .cat-card:first-child { grid-row: 1 / 3; }
+  .cat-bg {
+    width: 100%; height: 100%;
+    transition: transform 0.6s ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cat-card:hover .cat-bg { transform: scale(1.05); }
+  .cat-shape {
+    width: 60%; height: 70%;
+    border-radius: 50% 50% 40% 40%;
+    opacity: 0.4;
+  }
+  .cat-card:nth-child(1) .cat-shape { background: linear-gradient(135deg, #C8A97E, #8B6F47); }
+  .cat-card:nth-child(2) .cat-shape { background: linear-gradient(135deg, #4a3728, #C8A97E); }
+  .cat-card:nth-child(3) .cat-shape { background: linear-gradient(135deg, #8B6F47, #2C1810); }
+  .cat-card:nth-child(4) .cat-shape { background: linear-gradient(135deg, #C8A97E, #4a3728); }
+  .cat-card:nth-child(5) .cat-shape { background: linear-gradient(135deg, #2C1810, #8B6F47); }
+  .cat-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 28px 32px;
+    background: linear-gradient(transparent, rgba(26,22,20,0.85));
+  }
+  .cat-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 300;
+    color: var(--white); margin-bottom: 4px;
+  }
+  .cat-count { font-size: 12px; color: var(--warm); letter-spacing: 0.08em; }
+  .cat-arrow {
+    position: absolute; top: 24px; right: 24px;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,169,126,0.4);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--warm); font-size: 14px;
+    opacity: 0; transform: translateY(4px);
+    transition: all 0.3s;
+  }
+  .cat-card:hover .cat-arrow { opacity: 1; transform: translateY(0); }
+
+  /* PRODUCTS */
+  .products-section { background: var(--white); }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .product-card { cursor: none; }
+  .product-img {
+    aspect-ratio: 3/4;
+    background: var(--cream);
+    position: relative; overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .product-shape-wrap {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.5s ease;
+  }
+  .product-card:hover .product-shape-wrap { transform: scale(1.04); }
+  .product-shape {
+    width: 55%; height: 72%;
+    border-radius: 50% 50% 40% 40%;
+    opacity: 0.55;
+    transition: opacity 0.3s;
+  }
+  .product-card:hover .product-shape { opacity: 0.7; }
+  .p1 .product-shape { background: linear-gradient(160deg, #C8A97E, #8B6F47); }
+  .p2 .product-shape { background: linear-gradient(160deg, #1A1614, #4a3728); }
+  .p3 .product-shape { background: linear-gradient(160deg, #8B6F47, #C8A97E); }
+  .p4 .product-shape { background: linear-gradient(160deg, #4a3728, #2C1810); }
+  .product-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--ink); color: var(--warm);
+    font-size: 10px; letter-spacing: 0.12em;
+    padding: 4px 10px; text-transform: uppercase;
+  }
+  .product-wishlist {
+    position: absolute; top: 12px; right: 12px;
+    width: 32px; height: 32px;
+    background: var(--white);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    opacity: 0; transform: translateY(-4px);
+    transition: all 0.3s;
+  }
+  .product-card:hover .product-wishlist { opacity: 1; transform: translateY(0); }
+  .product-quick-add {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: var(--ink);
+    color: var(--warm);
+    text-align: center;
+    padding: 12px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .product-card:hover .product-quick-add { transform: translateY(0); }
+  .product-info { padding: 0 4px; }
+  .product-brand { font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 4px; }
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .product-price-row { display: flex; align-items: center; gap: 10px; }
+  .product-price { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .product-price-old { font-size: 13px; color: var(--muted); text-decoration: line-through; }
+  .product-colors { display: flex; gap: 6px; margin-top: 10px; }
+  .color-dot { width: 14px; height: 14px; border-radius: 50%; cursor: none; transition: transform 0.2s; }
+  .color-dot:hover { transform: scale(1.3); }
+  .color-dot.active { box-shadow: 0 0 0 2px var(--cream), 0 0 0 3px var(--ink); }
+
+  /* EDITORIAL STRIP */
+  .editorial {
+    background: var(--ink);
+    padding: 100px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .editorial-text .section-tag { margin-bottom: 16px; }
+  .editorial-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 4vw, 58px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  .editorial-text h2 em { font-style: italic; color: var(--warm); }
+  .editorial-text p {
+    font-size: 14px; line-height: 1.9;
+    color: rgba(245,240,232,0.55);
+    font-weight: 300; margin-bottom: 40px;
+    max-width: 420px;
+  }
+  .editorial-stats {
+    display: flex; gap: 40px; margin-bottom: 48px;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 300;
+    color: var(--warm); line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(245,240,232,0.4);
+    margin-top: 4px;
+  }
+  .editorial-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 300px 180px;
+    gap: 10px;
+  }
+  .edit-img {
+    background: #2C2017;
+    border-radius: 4px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .edit-img:first-child { grid-row: 1 / 3; }
+  .edit-shape {
+    width: 55%; height: 60%;
+    border-radius: 50%;
+    opacity: 0.35;
+  }
+  .e1 { background: linear-gradient(135deg, #C8A97E, #4a3728); }
+  .e2 { background: linear-gradient(135deg, #8B6F47, #2C1810); }
+  .e3 { background: linear-gradient(135deg, #C8A97E, #8B6F47); }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--cream); padding: 100px 48px; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .testimonial-card {
+    background: var(--white);
+    padding: 36px 32px;
+    border: 1px solid rgba(200,169,126,0.2);
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+  .testimonial-card::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px; font-weight: 300;
+    color: var(--warm-light);
+    position: absolute; top: 10px; left: 24px;
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 400;
+    line-height: 1.7; color: var(--ink);
+    margin-bottom: 24px; margin-top: 20px;
+    font-style: italic;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500;
+    color: var(--white);
+    background: var(--ink);
+    flex-shrink: 0;
+  }
+  .author-name { font-size: 13px; font-weight: 500; }
+  .author-loc { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+  .stars { color: var(--warm); font-size: 12px; margin-bottom: 4px; }
+
+  /* NEWSLETTER */
+  .newsletter {
+    background: var(--ink);
+    padding: 80px 48px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .newsletter::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,126,0.08);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .newsletter::after {
+    content: '';
+    position: absolute;
+    width: 900px; height: 900px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,126,0.04);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .newsletter-inner { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
+  .newsletter h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300; color: var(--white);
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .newsletter h2 em { font-style: italic; color: var(--warm); }
+  .newsletter p { font-size: 14px; color: rgba(245,240,232,0.5); margin-bottom: 36px; font-weight: 300; line-height: 1.7; }
+  .newsletter-form { display: flex; gap: 0; max-width: 420px; margin: 0 auto; }
+  .newsletter-form input {
+    flex: 1;
+    padding: 14px 20px;
+    background: rgba(245,240,232,0.06);
+    border: 1px solid rgba(200,169,126,0.25);
+    border-right: none;
+    color: var(--white);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+  }
+  .newsletter-form input::placeholder { color: rgba(245,240,232,0.3); }
+  .newsletter-form input:focus { border-color: var(--warm); }
+  .newsletter-form button {
+    background: var(--warm);
+    color: var(--ink);
+    border: none; cursor: none;
+    padding: 14px 24px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.3s;
+  }
+  .newsletter-form button:hover { background: var(--warm-light); }
+  .newsletter-note { font-size: 11px; color: rgba(245,240,232,0.25); margin-top: 14px; }
+
+  /* FOOTER */
+  footer {
+    background: #110D0B;
+    padding: 64px 48px 32px;
+    color: rgba(245,240,232,0.5);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(245,240,232,0.08);
+    margin-bottom: 32px;
+  }
+  .footer-brand .logo { font-size: 24px; color: var(--white); }
+  .footer-brand p { font-size: 13px; line-height: 1.8; margin-top: 16px; font-weight: 300; max-width: 260px; }
+  .footer-socials { display: flex; gap: 14px; margin-top: 24px; }
+  .social-btn {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(245,240,232,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; cursor: none;
+    color: rgba(245,240,232,0.5);
+    transition: all 0.3s;
+  }
+  .social-btn:hover { border-color: var(--warm); color: var(--warm); }
+  .footer-col h4 {
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--white);
+    margin-bottom: 20px; font-weight: 500;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a {
+    text-decoration: none;
+    font-size: 13px; color: rgba(245,240,232,0.45);
+    transition: color 0.2s; font-weight: 300;
+  }
+  .footer-col ul li a:hover { color: var(--warm); }
+  .footer-bottom {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  .payment-icons { display: flex; gap: 8px; }
+  .payment-icon {
+    background: rgba(245,240,232,0.08);
+    padding: 4px 8px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    border-radius: 3px;
+    color: rgba(245,240,232,0.4);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
+  @keyframes rotateBadge {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* CART DRAWER */
+  .cart-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+  .cart-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: 400px;
+    background: var(--white);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column;
+  }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-head {
+    padding: 24px 28px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cart-head h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 300;
+  }
+  .cart-close {
+    background: none; border: none; cursor: none;
+    font-size: 20px; color: var(--muted);
+  }
+  .cart-items { flex: 1; overflow-y: auto; padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; }
+  .cart-item { display: flex; gap: 14px; }
+  .cart-item-img {
+    width: 72px; height: 90px;
+    background: var(--cream);
+    border-radius: 4px;
+    flex-shrink: 0; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-size: 14px; font-weight: 400; margin-bottom: 4px; }
+  .cart-item-variant { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .cart-item-price { font-size: 14px; font-weight: 500; }
+  .cart-qty { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+  .cart-qty button {
+    width: 26px; height: 26px;
+    border: 1px solid rgba(0,0,0,0.15);
+    background: none; cursor: none;
+    font-size: 16px; display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+  }
+  .cart-qty span { font-size: 14px; }
+  .cart-footer { padding: 24px 28px; border-top: 1px solid rgba(0,0,0,0.08); }
+  .cart-subtotal {
+    display: flex; justify-content: space-between;
+    font-size: 14px; margin-bottom: 6px;
+  }
+  .cart-total-row {
+    display: flex; justify-content: space-between;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400;
+    margin-bottom: 20px;
+  }
+  .checkout-btn {
+    width: 100%;
+    background: var(--ink); color: var(--white);
+    border: none; padding: 16px;
+    font-size: 12px; letter-spacing: 0.15em;
+    text-transform: uppercase; cursor: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.3s;
+  }
+  .checkout-btn:hover { background: #2C1810; }
+
+  @media (max-width: 900px) {
+    header { padding: 0 24px; }
+    nav { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .section { padding: 60px 24px; }
+    .categories-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .cat-card:first-child { grid-row: auto; }
+    .products-grid { grid-template-columns: 1fr 1fr; }
+    .editorial { grid-template-columns: 1fr; gap: 48px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .cart-drawer { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-head">
+    <h3>Your Bag (2)</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items">
+    <div class="cart-item">
+      <div class="cart-item-img">🧥</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">Sienna Trench Coat</div>
+        <div class="cart-item-variant">Camel · Size M</div>
+        <div class="cart-item-price">₦89,000</div>
+        <div class="cart-qty">
+          <button onclick="changeQty(this,-1)">−</button>
+          <span>1</span>
+          <button onclick="changeQty(this,1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="cart-item">
+      <div class="cart-item-img">👗</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">Olio Slip Dress</div>
+        <div class="cart-item-variant">Ivory · Size S</div>
+        <div class="cart-item-price">₦54,500</div>
+        <div class="cart-qty">
+          <button onclick="changeQty(this,-1)">−</button>
+          <span>1</span>
+          <button onclick="changeQty(this,1)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-subtotal"><span>Subtotal</span><span>₦143,500</span></div>
+    <div class="cart-subtotal" style="color:var(--muted)"><span>Shipping</span><span>Calculated at checkout</span></div>
+    <div class="cart-total-row"><span>Total</span><span>₦143,500</span></div>
+    <button class="checkout-btn">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- BANNER -->
+<div class="banner">
+  Free shipping on orders over ₦50,000 <span>·</span> New arrivals every Friday <span>·</span> Use code <strong>AURÉ10</strong> for 10% off
+</div>
+
+<!-- HEADER -->
+<header id="site-header">
+  <a href="#" class="logo">Auré</a>
+  <nav>
+    <a href="#">New In</a>
+    <a href="#">Women</a>
+    <a href="#">Men</a>
+    <a href="#">Collections</a>
+    <a href="#">Sale</a>
+  </nav>
+  <div class="header-icons">
+    <button>🔍</button>
+    <button>♡</button>
+    <button onclick="openCart()" style="position:relative">
+      🛍
+      <span class="cart-count">2</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Spring / Summer 2025 Collection</div>
+    <h1 class="hero-title">Dress with<br><em>intention.</em></h1>
+    <p class="hero-desc">Timeless pieces crafted for the modern wardrobe. Where luxury meets everyday elegance — made to last, designed to move.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">Shop Now</a>
+      <a href="#editorial" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-placeholder">
+      <div class="hero-model-shape"></div>
+      <div class="hero-badge">
+        <span>New<br>Season</span>
+      </div>
+      <div class="hero-scroll">
+        <div class="scroll-line"></div>
+        Scroll
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Free Returns <span>✦</span></span>
+    <span class="marquee-item">Sustainable Fabrics <span>✦</span></span>
+    <span class="marquee-item">Ethically Produced <span>✦</span></span>
+    <span class="marquee-item">New Arrivals Weekly <span>✦</span></span>
+    <span class="marquee-item">Express Delivery <span>✦</span></span>
+    <span class="marquee-item">Free Returns <span>✦</span></span>
+    <span class="marquee-item">Sustainable Fabrics <span>✦</span></span>
+    <span class="marquee-item">Ethically Produced <span>✦</span></span>
+    <span class="marquee-item">New Arrivals Weekly <span>✦</span></span>
+    <span class="marquee-item">Express Delivery <span>✦</span></span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-tag">Shop by Category</div>
+    <h2 class="section-title">Find Your <em>Perfect</em> Look</h2>
+  </div>
+  <div class="categories-grid">
+    <div class="cat-card">
+      <div class="cat-bg"><div class="cat-shape"></div></div>
+      <div class="cat-overlay"><div class="cat-name">Women's Collection</div><div class="cat-count">142 pieces</div></div>
+      <div class="cat-arrow">→</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg"><div class="cat-shape"></div></div>
+      <div class="cat-overlay"><div class="cat-name">Men's Essentials</div><div class="cat-count">98 pieces</div></div>
+      <div class="cat-arrow">→</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg"><div class="cat-shape"></div></div>
+      <div class="cat-overlay"><div class="cat-name">Accessories</div><div class="cat-count">64 pieces</div></div>
+      <div class="cat-arrow">→</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg"><div class="cat-shape"></div></div>
+      <div class="cat-overlay"><div class="cat-name">New Arrivals</div><div class="cat-count">28 pieces</div></div>
+      <div class="cat-arrow">→</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg"><div class="cat-shape"></div></div>
+      <div class="cat-overlay"><div class="cat-name">Sale</div><div class="cat-count">Up to 50% off</div></div>
+      <div class="cat-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section products-section" id="products">
+  <div class="section-header">
+    <div class="section-tag">Featured Products</div>
+    <h2 class="section-title">This Season's <em>Must-Haves</em></h2>
+  </div>
+  <div class="products-grid">
+    <div class="product-card p1">
+      <div class="product-img">
+        <div class="product-shape-wrap"><div class="product-shape"></div></div>
+        <div class="product-badge">New</div>
+        <div class="product-wishlist">♡</div>
+        <div class="product-quick-add">+ Quick Add</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Auré Studio</div>
+        <div class="product-name">Sienna Trench Coat</div>
+        <div class="product-price-row">
+          <span class="product-price">₦89,000</span>
+        </div>
+        <div class="product-colors">
+          <div class="color-dot active" style="background:#C8A97E" title="Camel"></div>
+          <div class="color-dot" style="background:#1A1614" title="Black"></div>
+          <div class="color-dot" style="background:#F5F0E8" title="Cream"></div>
+        </div>
+      </div>
+    </div>
+    <div class="product-card p2">
+      <div class="product-img">
+        <div class="product-shape-wrap"><div class="product-shape"></div></div>
+        <div class="product-badge">Sale</div>
+        <div class="product-wishlist">♡</div>
+        <div class="product-quick-add">+ Quick Add</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Auré Noir</div>
+        <div class="product-name">Olio Slip Dress</div>
+        <div class="product-price-row">
+          <span class="product-price">₦54,500</span>
+          <span class="product-price-old">₦72,000</span>
+        </div>
+        <div class="product-colors">
+          <div class="color-dot active" style="background:#FDFBF7" title="Ivory" ></div>
+          <div class="color-dot" style="background:#2C1810" title="Espresso"></div>
+        </div>
+      </div>
+    </div>
+    <div class="product-card p3">
+      <div class="product-img">
+        <div class="product-shape-wrap"><div class="product-shape"></div></div>
+        <div class="product-wishlist">♡</div>
+        <div class="product-quick-add">+ Quick Add</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Auré Studio</div>
+        <div class="product-name">Margaux Wide-Leg Trouser</div>
+        <div class="product-price-row">
+          <span class="product-price">₦41,000</span>
+        </div>
+        <div class="product-colors">
+          <div class="color-dot active" style="background:#8B6F47"></div>
+          <div class="color-dot" style="background:#4a3728"></div>
+          <div class="color-dot" style="background:#1A1614"></div>
+        </div>
+      </div>
+    </div>
+    <div class="product-card p4">
+      <div class="product-img">
+        <div class="product-shape-wrap"><div class="product-shape"></div></div>
+        <div class="product-badge">Best Seller</div>
+        <div class="product-wishlist">♡</div>
+        <div class="product-quick-add">+ Quick Add</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Auré Linen</div>
+        <div class="product-name">Côte Linen Blazer</div>
+        <div class="product-price-row">
+          <span class="product-price">₦67,500</span>
+        </div>
+        <div class="product-colors">
+          <div class="color-dot active" style="background:#D4A97A"></div>
+          <div class="color-dot" style="background:#F5F0E8"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDITORIAL -->
+<section class="editorial" id="editorial">
+  <div class="editorial-text">
+    <div class="section-tag">Our Philosophy</div>
+    <h2>Crafted with <em>purpose,</em><br>worn with pride.</h2>
+    <p>At Auré, we believe fashion is more than fabric — it's a statement of who you are. Every piece in our collection is thoughtfully designed, ethically sourced, and made to stand the test of time. We partner only with artisans who share our commitment to quality and care.</p>
+    <div class="editorial-stats">
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Years in fashion</div>
+      </div>
+      <div>
+        <div class="stat-num">40K</div>
+        <div class="stat-label">Happy customers</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Ethical sourcing</div>
+      </div>
+    </div>
+    <a href="#" class="btn-primary" style="background:var(--warm)">Discover Our Story</a>
+  </div>
+  <div class="editorial-visual">
+    <div class="edit-img"><div class="edit-shape e1"></div></div>
+    <div class="edit-img"><div class="edit-shape e2"></div></div>
+    <div class="edit-img"><div class="edit-shape e3"></div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-header">
+    <div class="section-tag">Customer Love</div>
+    <h2 class="section-title">What Our <em>Clients</em> Say</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">The Sienna Trench Coat is everything I ever wanted. The quality is unreal — I've had it for 8 months and it still looks brand new. Worth every naira.</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">AT</div>
+        <div><div class="author-name">Adaeze Thompson</div><div class="author-loc">Lagos, Nigeria</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">I ordered the Olio Slip Dress for my engagement and received so many compliments. The packaging alone felt luxurious. Auré really gets it right.</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">FO</div>
+        <div><div class="author-name">Fatima Okafor</div><div class="author-loc">Abuja, Nigeria</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">Stylish, sustainable, and ships fast. The Côte Linen Blazer has become my go-to for every business meeting. Highly recommend to anyone who values quality.</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">KA</div>
+        <div><div class="author-name">Kolade Adeyemi</div><div class="author-loc">Ibadan, Nigeria</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <h2>Join the <em>Auré</em><br>Inner Circle</h2>
+    <p>Be the first to know about new arrivals, exclusive offers, and styling tips — straight to your inbox. No spam, just style.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Your email address">
+      <button>Subscribe</button>
+    </div>
+    <p class="newsletter-note">By subscribing you agree to our Privacy Policy. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">Auré</a>
+      <p>Premium fashion for the modern wardrobe. Thoughtfully designed, ethically made, and built to last.</p>
+      <div class="footer-socials">
+        <div class="social-btn">in</div>
+        <div class="social-btn">ig</div>
+        <div class="social-btn">tw</div>
+        <div class="social-btn">yt</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Women</a></li>
+        <li><a href="#">Men</a></li>
+        <li><a href="#">Accessories</a></li>
+        <li><a href="#">Sale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Shipping Info</a></li>
+        <li><a href="#">Returns & Exchanges</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Auré</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Affiliate Program</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Auré. All rights reserved.</span>
+    <div class="payment-icons">
+      <div class="payment-icon">VISA</div>
+      <div class="payment-icon">MC</div>
+      <div class="payment-icon">Paystack</div>
+      <div class="payment-icon">Flutterwave</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx-5}px,${my-5}px)`;
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx-18}px,${ry-18}px)`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // Sticky header
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-header').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Cart
+  function openCart() {
+    document.getElementById('cart-overlay').classList.add('open');
+    document.getElementById('cart-drawer').classList.add('open');
+  }
+  function closeCart() {
+    document.getElementById('cart-overlay').classList.remove('open');
+    document.getElementById('cart-drawer').classList.remove('open');
+  }
+
+  // Qty change
+  function changeQty(btn, delta) {
+    const span = btn.parentElement.querySelector('span');
+    let v = parseInt(span.textContent) + delta;
+    if (v < 1) v = 1;
+    span.textContent = v;
+  }
+
+  // Wishlist toggle
+  document.querySelectorAll('.product-wishlist').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.textContent = btn.textContent === '♡' ? '♥' : '♡';
+      btn.style.color = btn.textContent === '♥' ? '#C8A97E' : '';
+    });
+  });
+
+  // Color swatches
+  document.querySelectorAll('.product-colors').forEach(group => {
+    group.querySelectorAll('.color-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        group.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+      });
+    });
+  });
+
+  // Newsletter
+  document.querySelector('.newsletter-form button').addEventListener('click', () => {
+    const input = document.querySelector('.newsletter-form input');
+    if (input.value.includes('@')) {
+      input.value = '';
+      input.placeholder = '✓ You\'re subscribed!';
+      setTimeout(() => input.placeholder = 'Your email address', 3000);
+    }
+  });
+</script>
+</body>
+</html>
