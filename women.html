@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Women — Auré</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--cream:#F5F0E8;--ink:#1A1614;--warm:#C8A97E;--warm-l:#E8D9C0;--muted:#8A7F74;--off:#FDFBF7;--dark:#2C1810}
+body{font-family:'DM Sans',Georgia,sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+.banner{background:var(--ink);color:var(--cream);text-align:center;padding:9px 16px;font-size:11px;letter-spacing:.13em;text-transform:uppercase}
+.banner b{color:var(--warm)}
+header{position:sticky;top:0;z-index:100;background:var(--cream);border-bottom:1px solid rgba(26,22,20,.1);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:68px;transition:box-shadow .3s}
+.logo{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:300;letter-spacing:.25em;color:var(--ink);text-decoration:none;text-transform:uppercase}
+nav{display:flex;gap:28px}
+nav a{text-decoration:none;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);font-weight:400;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .3s}
+nav a:hover,nav a.active{border-color:var(--warm);color:var(--ink)}
+.hicons{display:flex;gap:16px;align-items:center}
+.hicons button{background:none;border:none;cursor:pointer;font-size:17px;color:var(--ink);position:relative}
+.cbadge{position:absolute;top:-6px;right:-7px;background:var(--warm);color:#fff;font-size:9px;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
+.page-hero{background:var(--ink);padding:64px 40px;display:flex;align-items:flex-end;justify-content:space-between;min-height:220px;position:relative;overflow:hidden}
+.page-hero::before{content:attr(data-title);position:absolute;font-family:'Cormorant Garamond',serif;font-size:160px;font-weight:300;color:rgba(255,255,255,.03);bottom:-20px;left:30px;white-space:nowrap;pointer-events:none}
+.page-hero-text .ptag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--warm);margin-bottom:10px}
+.page-hero-text h1{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,64px);font-weight:300;color:var(--off);line-height:1.05}
+.page-hero-text h1 em{font-style:italic;color:var(--warm)}
+.page-hero-text p{font-size:13px;color:rgba(245,240,232,.5);margin-top:12px;max-width:400px;line-height:1.7;font-weight:300}
+.ph-count{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:rgba(200,169,126,.2);text-align:right;line-height:1}
+.ph-count span{display:block;font-size:11px;color:var(--warm);letter-spacing:.15em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+.filters{padding:24px 40px;background:var(--off);border-bottom:1px solid rgba(26,22,20,.08);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.filter-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.ftab{padding:7px 18px;border-radius:999px;border:1px solid rgba(26,22,20,.15);font-size:11px;letter-spacing:.08em;cursor:pointer;background:transparent;color:var(--ink);transition:all .2s;font-family:'DM Sans',sans-serif;text-transform:uppercase}
+.ftab:hover{background:var(--cream)}
+.ftab.on{background:var(--ink);color:var(--warm);border-color:var(--ink)}
+.sort-wrap{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.sort-wrap select{border:1px solid rgba(26,22,20,.15);background:transparent;font-size:11px;padding:6px 12px;font-family:'DM Sans',sans-serif;color:var(--ink);cursor:pointer;outline:none}
+.pgrid-wrap{padding:40px;background:var(--cream)}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.pcard{cursor:pointer}
+.pimg{aspect-ratio:3/4;background:var(--off);position:relative;overflow:hidden;margin-bottom:14px}
+.pshape-w{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .5s ease}
+.pcard:hover .pshape-w{transform:scale(1.04)}
+.pshape{width:52%;height:70%;border-radius:50% 50% 38% 38%;opacity:.55;transition:opacity .3s}
+.pcard:hover .pshape{opacity:.72}
+.pbadge{position:absolute;top:10px;left:10px;background:var(--ink);color:var(--warm);font-size:9px;letter-spacing:.1em;padding:3px 9px;text-transform:uppercase}
+.pbadge.sale{background:#8B0000;color:#fff}
+.pbadge.new{background:var(--dark);color:var(--warm)}
+.pwish{position:absolute;top:10px;right:10px;width:30px;height:30px;background:var(--off);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;opacity:0;transform:translateY(-4px);transition:all .3s;cursor:pointer;border:none}
+.pcard:hover .pwish{opacity:1;transform:translateY(0)}
+.pqa{position:absolute;bottom:0;left:0;right:0;background:var(--ink);color:var(--warm);text-align:center;padding:11px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;transform:translateY(100%);transition:transform .3s ease}
+.pcard:hover .pqa{transform:translateY(0)}
+.pinfo{padding:0 3px}
+.pbrand{font-size:9px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:3px}
+.pname{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;margin-bottom:5px}
+.prow{display:flex;align-items:center;gap:8px}
+.pprice{font-size:13px;font-weight:500}
+.pold{font-size:12px;color:var(--muted);text-decoration:line-through}
+.pcols{display:flex;gap:5px;margin-top:8px}
+.cdot{width:13px;height:13px;border-radius:50%;cursor:pointer;transition:transform .2s}
+.cdot:hover{transform:scale(1.3)}
+.cdot.on{box-shadow:0 0 0 2px var(--cream),0 0 0 3px var(--ink)}
+.load-more{text-align:center;padding:48px 40px}
+.btn-load{background:transparent;border:1px solid rgba(26,22,20,.25);padding:14px 48px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--ink);transition:all .3s}
+.btn-load:hover{background:var(--ink);color:var(--warm);border-color:var(--ink)}
+footer{background:#100C0A;padding:56px 40px 28px}
+.ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(245,240,232,.07);margin-bottom:28px}
+.fbrand p{font-size:12px;line-height:1.8;color:rgba(245,240,232,.4);margin-top:14px;font-weight:300;max-width:240px}
+.fsocials{display:flex;gap:10px;margin-top:20px}
+.fsoc{width:34px;height:34px;border:1px solid rgba(245,240,232,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;color:rgba(245,240,232,.4);transition:all .3s}
+.fsoc:hover{border-color:var(--warm);color:var(--warm)}
+.fcol h4{font-size:10px;letter-spacing:.17em;text-transform:uppercase;color:var(--off);margin-bottom:18px;font-weight:500}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fcol ul li a{text-decoration:none;font-size:12px;color:rgba(245,240,232,.38);transition:color .2s;font-weight:300}
+.fcol ul li a:hover{color:var(--warm)}
+.fbot{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(245,240,232,.3)}
+.pays{display:flex;gap:7px}
+.pay{background:rgba(245,240,232,.07);padding:3px 7px;font-size:9px;letter-spacing:.07em;border-radius:3px;color:rgba(245,240,232,.35)}
+.cart-ov{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-ov.open{opacity:1;pointer-events:all}
+.cart-dr{position:fixed;top:0;right:0;bottom:0;width:360px;background:var(--off);z-index:201;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.cart-dr.open{transform:translateX(0)}
+.cart-hd{padding:20px 24px;border-bottom:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between;align-items:center}
+.cart-hd h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300}
+.cart-x{background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted)}
+.cart-items{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+.citem{display:flex;gap:12px}
+.cthumb{width:66px;height:82px;background:var(--cream);border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
+.cinfo{flex:1}
+.cname{font-size:13px;font-weight:400;margin-bottom:3px}
+.cvar{font-size:11px;color:var(--muted);margin-bottom:6px}
+.cprice{font-size:13px;font-weight:500}
+.cqty{display:flex;align-items:center;gap:8px;margin-top:7px}
+.cqty button{width:24px;height:24px;border:1px solid rgba(0,0,0,.13);background:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.cqty span{font-size:13px}
+.cart-ft{padding:20px 24px;border-top:1px solid rgba(0,0,0,.07)}
+.csub{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+.ctot{display:flex;justify-content:space-between;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin-bottom:18px}
+.chk{width:100%;background:var(--ink);color:var(--off);border:none;padding:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .3s}
+.chk:hover{background:var(--dark)}
+.marquee-wrap{background:var(--ink);padding:12px 0;overflow:hidden;white-space:nowrap}
+.mtrack{display:inline-flex;animation:marquee 22s linear infinite}
+.mitem{display:inline-flex;align-items:center;gap:28px;padding:0 28px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,.45)}
+.mitem span{color:var(--warm);font-size:14px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:860px){
+  header{padding:0 20px} nav{display:none}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .pgrid-wrap{padding:20px}
+  .filters{padding:16px 20px}
+  .ftop{grid-template-columns:1fr 1fr}
+  .cart-dr{width:100%}
+  .page-hero{padding:40px 20px;min-height:180px}
+}
+</style>
+</head>
+<body>
+
+<div class="cart-ov" id="cov" onclick="closeCart()"></div>
+<div class="cart-dr" id="cdr">
+  <div class="cart-hd"><h3>Your Bag (2)</h3><button class="cart-x" onclick="closeCart()">✕</button></div>
+  <div class="cart-items">
+    <div class="citem"><div class="cthumb">🧥</div><div class="cinfo"><div class="cname">Sienna Trench Coat</div><div class="cvar">Camel · Size M</div><div class="cprice">₦89,000</div><div class="cqty"><button onclick="chQty(this,-1)">−</button><span>1</span><button onclick="chQty(this,1)">+</button></div></div></div>
+    <div class="citem"><div class="cthumb">👗</div><div class="cinfo"><div class="cname">Olio Slip Dress</div><div class="cvar">Ivory · Size S</div><div class="cprice">₦54,500</div><div class="cqty"><button onclick="chQty(this,-1)">−</button><span>1</span><button onclick="chQty(this,1)">+</button></div></div></div>
+  </div>
+  <div class="cart-ft">
+    <div class="csub"><span>Subtotal</span><span>₦143,500</span></div>
+    <div class="csub" style="color:var(--muted)"><span>Shipping</span><span>Calculated at checkout</span></div>
+    <div class="ctot"><span>Total</span><span>₦143,500</span></div>
+    <button class="chk">Proceed to Checkout</button>
+  </div>
+</div>
+<div class="banner">Free shipping on orders over ₦50,000 &nbsp;·&nbsp; New arrivals every Friday &nbsp;·&nbsp; Use code <b>AURÉ10</b> for 10% off</div>
+<header id="hdr">
+  <a href="index.html" class="logo">Auré</a>
+  <nav>
+    <a href="new-in.html" >New In</a>
+    <a href="women.html" class="active">Women</a>
+    <a href="men.html" >Men</a>
+    <a href="collections.html" >Collections</a>
+    <a href="sale.html" >Sale</a>
+  </nav>
+  <div class="hicons">
+    <button>🔍</button><button>♡</button>
+    <button onclick="openCart()" style="position:relative">🛍<span class="cbadge">2</span></button>
+  </div>
+</header>
+<div class="marquee-wrap"><div class="mtrack">
+  <span class="mitem">Free Returns <span>✦</span></span>
+  <span class="mitem">Sustainable Fabrics <span>✦</span></span>
+  <span class="mitem">New Arrivals Weekly <span>✦</span></span>
+  <span class="mitem">Express Delivery <span>✦</span></span>
+  <span class="mitem">Ethically Produced <span>✦</span></span>
+  <span class="mitem">Free Returns <span>✦</span></span>
+  <span class="mitem">Sustainable Fabrics <span>✦</span></span>
+  <span class="mitem">New Arrivals Weekly <span>✦</span></span>
+  <span class="mitem">Express Delivery <span>✦</span></span>
+  <span class="mitem">Ethically Produced <span>✦</span></span>
+</div></div>
+<section class="page-hero" data-title="WOMEN">
+  <div class="page-hero-text">
+    <div class="ptag">Auré Women · SS 2025</div>
+    <h1>Women's <em>Collection</em></h1>
+    <p>Elegant, considered pieces for the woman who moves with intention.</p>
+  </div>
+  <div class="ph-count">142<span>pieces</span></div>
+</section>
+<div class="filters">
+  <div class="filter-tabs"><button class="ftab on">All</button><button class="ftab">Dresses</button><button class="ftab">Blazers</button><button class="ftab">Trousers</button><button class="ftab">Blouses</button><button class="ftab">Co-ords</button></div>
+  <div class="sort-wrap">Sort by:
+    <select><option>Featured</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Newest</option></select>
+  </div>
+</div>
+<div class="pgrid-wrap">
+  <div class="pgrid"><div class="pcard">
+  <div class="pimg">
+    <div class="pshape-w"><div class="pshape" style="background:linear-gradient(160deg,#C8A97E,#8B6F47)"></div></div>
+    <div class="pbadge new">New</div><button class="pwish" onclick="toggleWish(this)">&#9825;</button>
+    <div class="pqa">+ Quick Add</div>
+  </div>
+  <div class="pinfo">
+    <div class="pbrand">Auré Studio</div>
+    <div class="pname">Sienna Trench Coat</div>
+    <div class="prow"><span class="pprice">₦89,000</span></div>
+    <div class="pcols"><div class="cdot on" style="background:#C8A97E;"></div><div class="cdot " style="background:#1A1614;"></div><div class="cdot " style="background:#F5F0E8;border:1px solid #ddd;"></div></div>
+  </div>
+</div><div class="pcard">
+  <div class="pimg">
+    <div class="pshape-w"><div class="pshape" style="background:linear-gradient(160deg,#1A1614,#4a3728)"></div></div>
+    <button class="pwish" onclick="toggleWish(this)">&#9825;</button>
+    <div class="pqa">+ Quick Add</div>
+  </div>
+  <div class="pinfo">
+    <div class="pbrand">Auré Noir</div>
+    <div class="pname">Olio Slip Dress</div>
+    <div class="prow"><span class="pprice">₦54,500</span><span class="pold">₦72,000</span></div>
+    <div class="pcols"><div class="cdot on" style="background:#F5F0E8;border:1px solid #ddd;"></div><div class="cdot " style="background:#2C1810;"></div></div>
+  </div>
+</div><div class="pcard">
+  <div class="pimg">
+    <div class="pshape-w"><div class="pshape" style="background:linear-gradient(160deg,#8B6F47,#C8A97E)"></div></div>
+    <button class="pwish" onclick="toggleWish(this)">&#9825;</button>
+    <div class="pqa">+ Quick Add</div>
+  </div>
+  <div class="pinfo">
+    <div class="pbrand">Auré Studio</div>
+    <div class="pname">Margaux Wide-Leg Trouser</div>
+    <div class="prow"><span class="pprice">₦41,000</span></div>
+    <div class="pcols"><div class="cdot on" style="background:#8B6F47;"></div><div class="cdot " style="background:#4a3728;"></div><div class="cdot " style="background:#1A1614;"></div></div>
+  </div>
+</div><div class="pcard">
+  <div class="pimg">
+    <div class="pshape-w"><div class="pshape" style="background:linear-gradient(160deg,#D4A97A,#8B6F47)"></div></div>
+    <div class="pbadge ">Best Seller</div><button class="pwish" onclick="toggleWish(this)">&#9825;</button>
+    <div class="pqa">+ Quick Add</div>
+  </div>
+  <div class="pinfo">
+    <div class="pbrand">Auré Linen</div>
+    <div class="pname">Côte Linen Blazer</div>
+    <div class="prow"><span class="pprice">₦67,500</span></div>
+    <div class="pcols"><div class="cdot on" style="background:#D4A97A;"></div><div class="cdot " style="background:#F5F0E8;border:1px solid #ddd;"></div></div>
+  </div>
+</div><div class="pcard">
+  <div class="pimg">
+    <div class="pshape-w"><div class="pshape" style="background:linear-gradient(160deg,#C8A97E,#E8D9C0)"></div></div>
+    <div class="pbadge new">New</div><button class="pwish" onclick="toggleWish(this)">&#9825;</button>
+    <div class="pqa">+ Quick Add</div>
+  </div>
+  <div class="pinfo">
+    <div class="pbrand">Auré Soft</div>
+    <div class="pname">Celeste Wrap Blouse</div>
+    <div class="prow"><span class="pprice">₦32,000</span></div>
+    <div class="pcols"><div class="cdot on" style="background:#E8D9C0;border:1px solid #ddd;"></div><div class="cdot " style="background:#C8A97E;"></div><div class="cdot " style="background:#1A1614;"></div></div>
+  </div>
+</div><div class="pcard">
+  <div class="pimg">
+    <div class="pshape-w"><div class="pshape" style="background:linear-gradient(160deg,#4a3728,#1A1614)"></div></div>
+    <button class="pwish" onclick="toggleWish(this)">&#9825;</button>
+    <div class="pqa">+ Quick Add</div>
+  </div>
+  <div class="pinfo">
+    <div class="pbrand">Auré Noir</div>
+    <div class="pname">Reverie Midi Skirt</div>
+    <div class="prow"><span class="pprice">₦44,500</span></div>
+    <div class="pcols"><div class="cdot on" style="background:#4a3728;"></div><div class="cdot " style="background:#1A1614;"></div><div class="cdot " style="background:#F5F0E8;border:1px solid #ddd;"></div></div>
+  </div>
+</div><div class="pcard">
+  <div class="pimg">
+    <div class="pshape-w"><div class="pshape" style="background:linear-gradient(160deg,#8B6F47,#4a3728)"></div></div>
+    <button class="pwish" onclick="toggleWish(this)">&#9825;</button>
+    <div class="pqa">+ Quick Add</div>
+  </div>
+  <div class="pinfo">
+    <div class="pbrand">Auré Studio</div>
+    <div class="pname">Alma Tailored Blazer</div>
+    <div class="prow"><span class="pprice">₦78,000</span><span class="pold">₦95,000</span></div>
+    <div class="pcols"><div class="cdot on" style="background:#8B6F47;"></div><div class="cdot " style="background:#1A1614;"></div></div>
+  </div>
+</div><div class="pcard">
+  <div class="pimg">
+    <div class="pshape-w"><div class="pshape" style="background:linear-gradient(160deg,#E8D9C0,#C8A97E)"></div></div>
+    <div class="pbadge new">New</div><button class="pwish" onclick="toggleWish(this)">&#9825;</button>
+    <div class="pqa">+ Quick Add</div>
+  </div>
+  <div class="pinfo">
+    <div class="pbrand">Auré Soft</div>
+    <div class="pname">Dune Linen Co-ord Set</div>
+    <div class="prow"><span class="pprice">₦58,000</span></div>
+    <div class="pcols"><div class="cdot on" style="background:#E8D9C0;border:1px solid #ddd;"></div><div class="cdot " style="background:#C8A97E;"></div></div>
+  </div>
+</div></div>
+</div>
+<div class="load-more"><button class="btn-load">Load More</button></div>
+
+<footer>
+  <div class="ftop">
+    <div class="fbrand">
+      <a href="index.html" class="logo" style="color:var(--off)">Auré</a>
+      <p>Premium fashion for the modern wardrobe. Thoughtfully designed, ethically made, and built to last.</p>
+      <div class="fsocials"><div class="fsoc">in</div><div class="fsoc">ig</div><div class="fsoc">tw</div><div class="fsoc">yt</div></div>
+    </div>
+    <div class="fcol"><h4>Shop</h4><ul>
+      <li><a href="new-in.html">New Arrivals</a></li>
+      <li><a href="women.html">Women</a></li>
+      <li><a href="men.html">Men</a></li>
+      <li><a href="collections.html">Collections</a></li>
+      <li><a href="sale.html">Sale</a></li>
+    </ul></div>
+    <div class="fcol"><h4>Help</h4><ul>
+      <li><a href="#">Shipping Info</a></li><li><a href="#">Returns</a></li>
+      <li><a href="#">Size Guide</a></li><li><a href="#">Contact Us</a></li><li><a href="#">FAQs</a></li>
+    </ul></div>
+    <div class="fcol"><h4>Company</h4><ul>
+      <li><a href="#">About Auré</a></li><li><a href="#">Sustainability</a></li>
+      <li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a href="#">Affiliates</a></li>
+    </ul></div>
+  </div>
+  <div class="fbot">
+    <span>© 2025 Auré. All rights reserved.</span>
+    <div class="pays"><div class="pay">VISA</div><div class="pay">MC</div><div class="pay">Paystack</div><div class="pay">Flutterwave</div></div>
+  </div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('hdr').style.boxShadow=window.scrollY>40?'0 4px 24px rgba(0,0,0,.07)':'';});
+function openCart(){document.getElementById('cov').classList.add('open');document.getElementById('cdr').classList.add('open');}
+function closeCart(){document.getElementById('cov').classList.remove('open');document.getElementById('cdr').classList.remove('open');}
+function chQty(btn,d){const s=btn.parentElement.querySelector('span');let v=parseInt(s.textContent)+d;s.textContent=v<1?1:v;}
+function toggleWish(btn){const on=btn.textContent==='♥';btn.textContent=on?'♡':'♥';btn.style.color=on?'':'#C8A97E';}
+document.querySelectorAll('.pcols').forEach(g=>{g.querySelectorAll('.cdot').forEach(d=>{d.addEventListener('click',()=>{g.querySelectorAll('.cdot').forEach(x=>x.classList.remove('on'));d.classList.add('on');});});});
+document.querySelectorAll('.ftab').forEach(t=>{t.addEventListener('click',()=>{t.closest('.filter-tabs').querySelectorAll('.ftab').forEach(x=>x.classList.remove('on'));t.classList.add('on');});});
+</script>
+</body>
+</html>
